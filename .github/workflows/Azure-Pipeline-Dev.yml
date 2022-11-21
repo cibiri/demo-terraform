@@ -6,8 +6,8 @@ on:
   pull_request:
 
 jobs:
-  Azure-Pipeline-Dev:
-    name: 'Azure-Pipeline-Dev'
+  AzureAuth:
+    name: 'AzureAuth'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
@@ -15,14 +15,16 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
     environment: development
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
 
+  CodeCheckout:
+    name: 'CodeCheckout'
+    runs-on: ubuntu-latest
+    environment: development
+    
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
 
