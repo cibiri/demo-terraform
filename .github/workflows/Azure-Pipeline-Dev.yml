@@ -16,7 +16,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'fmt'
+        tf_actions_working_dir: "./terraform"
+        
   TerraformFormat:
     name: 'TerraformFormat'
     runs-on: ubuntu-latest
