@@ -6,28 +6,31 @@ on:
   pull_request:
 
 jobs:
-  AzureAuth:
-    name: 'AzureAuth'
+  CodeCheckout:
+    name: 'CodeCheckout'
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        shell: bash   
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+  TerraformFormat:
+    name: 'TerraformFormat'
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        shell: bash   
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-    runs-on: ubuntu-latest
-    environment: development
-    defaults:
-      run:
-        shell: bash
 
-  CodeCheckout:
-    name: 'CodeCheckout'
-    runs-on: ubuntu-latest
-    environment: development
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
     - name: 'Terraform Format'
       uses: hashicorp/terraform-github-actions@master
       with:
