@@ -1,5 +1,4 @@
-name: 'Terraform'
-
+name: 'Azure-Pipeline-Dev'
 on:
   push:
     branches:
@@ -7,15 +6,15 @@ on:
   pull_request:
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  Azure-Pipeline-Dev:
+    name: 'Azure-Pipeline-Dev'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
