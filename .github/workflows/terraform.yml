@@ -33,7 +33,15 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'fmt'
         tf_actions_working_dir: "./terraform"
-        
+
+    - name: 'Terraform Security'
+      uses: actions/checkout@master
+    - name: tfsec
+      uses: aquasecurity/tfsec-action@v1.0.0
+      with:
+        tf_actions_working_dir: "./terraform"
+        soft_fail: true       
+
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
       with:
