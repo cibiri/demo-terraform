@@ -21,6 +21,7 @@ jobs:
     name: 'TerraformFormat'
     runs-on: ubuntu-latest
     environment: development
+    needs: [CodeCheckout]
     defaults:
       run:
         shell: bash   
@@ -37,6 +38,7 @@ jobs:
     name: 'TerraformSecurity'
     runs-on: ubuntu-latest
     environment: development
+    needs: [CodeCheckout,TerraformFormat]
     defaults:
       run:
         shell: bash   
@@ -54,6 +56,7 @@ jobs:
     name: 'TerraformInit'
     runs-on: ubuntu-latest
     environment: development
+    needs: [CodeCheckout,TerraformFormat,TerraformSecurity]
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
@@ -75,6 +78,7 @@ jobs:
     name: 'TerraformValidate'
     runs-on: ubuntu-latest
     environment: development
+    needs: [CodeCheckout,TerraformFormat,TerraformSecurity,TerraformInit]
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
@@ -96,6 +100,7 @@ jobs:
     name: 'TerraformPlan'
     runs-on: ubuntu-latest
     environment: development
+    needs: [CodeCheckout,TerraformFormat,TerraformSecurity,TerraformInit,TerraformValidate]
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
@@ -117,6 +122,7 @@ jobs:
     name: 'TerraformApply'
     runs-on: ubuntu-latest
     environment: development
+    needs: [TerraformPlan]
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
